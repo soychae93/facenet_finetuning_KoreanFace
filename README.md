@@ -73,14 +73,14 @@ Run the following command to evaluate model performance on your aligned dataset:
 ```bash
 #!/bin/bash
 
-python3 src/validate_on_newfaces.py \
+python3 src/validate_on_frozen.py \
     /home/user \
     /home/facenet-master/finetuned_models/20200517-21222 \
     --distance_metric 1 \
     --use_flipped_images \
     --subtract_mean \
     --use_fixed_image_standardization \
-    --lfw_pairs /home/jspark/Downloads/pairs_user.txt \
+    --lfw_pairs /home/pairs_user.txt \
     --lfw_batch_size 78 \
     --lfw_nrof_folds 2
 ```
