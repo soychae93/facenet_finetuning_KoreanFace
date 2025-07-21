@@ -22,3 +22,23 @@ facenet-korean/
 ├── README.md # You are here
 └── requirements.txt
 
+## 📊 Performance
+
+The fine-tuned FaceNet model demonstrates excellent performance on Korean face verification tasks:
+
+| **Metric**                     | **Value**                         |
+|-------------------------------|-----------------------------------|
+| **Accuracy**                  | 0.9955 ± 0.00342                  |
+| **Validation Rate**           | 0.9860 ± 0.00975 @ FAR = 0.00100 |
+| **Area Under Curve (AUC)**    | 1.000                             |
+| **Equal Error Rate (EER)**    | 0.004                             |
+
+### 🔍 Interpretation
+- **Accuracy**: Overall recognition accuracy is **99.55%**.
+- **Validation Rate**: **98.60%** accuracy at a **0.1%** false acceptance rate.
+- **AUC = 1.000**: Perfect separation between genuine and impostor pairs.
+- **EER = 0.004**: Only 0.4% of samples are misclassified when false acceptance and rejection rates are equal.
+
+These results suggest the model is highly effective for Korean facial recognition scenarios.
+
+
