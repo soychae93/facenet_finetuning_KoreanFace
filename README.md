@@ -12,56 +12,17 @@ The original FaceNet model was trained primarily on Western face datasets. As a 
 - Updated training scripts to support additional preprocessing options (e.g., alignment method tuned for East Asian landmarks).
 - Evaluated fine-tuned model performance on Korean datasets.
 
-## 🔁 Evaluation with New Data
+---
 
-### 🧩 1. Align Your Dataset Using MTCNN
+## 🏆 Results
 
-This step crops the faces from new images using MTCNN:
-```bash
-#!/bin/bash
+> 📈 **Fine-tuning with Korean facial data significantly improved model performance**, especially for faces with occlusions (e.g., glasses, sunglasses) or varied viewpoints.
+>
+> ✅ **Overall accuracy improved from 74.6% to 93.0%**  
+> ✅ **Subgroup accuracy (e.g., glasses/clothing/angles) improved from 78.3% to 95.6%**  
+> ✅ **False acceptance rate (FAR) decreased by over 75%**
 
-export PYTHONPATH=/home/schae/lsmm_proj/facenet-master/src
-for N in {1..4}; do \
-python /user/facenet-master/src/align/align_dataset_mtcnn.py \
-/user/facenet-master/datasets/lfw/K-face_mtcnn/ \
-/user/facenet-master/datasets/K-face_160 \
---image_size 160 \
---margin 32 \
---random_order \
---gpu_memory_fraction 0.25 \
-& done
-
-To evaluate the fine-tuned model on a new dataset, use the following command:
-
-#!/bin/bash
-
-python3 src/validate_on_newfaces.py \
-    /home/user \
-    /home/facenet-master/finetuned_models/20200517-21222 \
-    --distance_metric 1 \
-    --use_flipped_images \
-    --subtract_mean \
-    --use_fixed_image_standardization \
-    --lfw_pairs /home/jspark/Downloads/pairs_user.txt \
-    --lfw_batch_size 78 \
-    --lfw_nrof_folds 2
-
-To load results, use the following command:
-#!/bin/bash
-python3 load_result.py\
-
-*Please update the directory paths (/user/...) according to your environment.
-
-## 📊 Performance
-The fine-tuned FaceNet model demonstrates excellent performance on Korean face:
-
-verification tasks:
-## 📊 Evaluation Results: Pre-trained vs. Fine-tuned Model
-- **Subgroup**: Evaluation metrics computed on **specific subsets of images**, such as those containing variations in **accessories** (e.g., sunglasses, glasses), **clothing**, or **viewpoint angle**. 
-- **Total**: Evaluation metrics computed on the **entire dataset**, representing the model's **overall face recognition performance** without separating by condition.
-
-The improvement in both subgroup and total metrics after fine-tuning indicates that the model not only performs well in general, but also maintains high accuracy across challenging face conditions (e.g., occlusion or appearance changes).
-
+### 📊 Evaluation Results: Pre-trained vs. Fine-tuned Model
 
 | **Category** | **Metric**    | **Pre-trained**            | **Fine-tuned**            |
 |--------------|---------------|----------------------------|---------------------------|
@@ -75,7 +36,13 @@ The improvement in both subgroup and total metrics after fine-tuning indicates t
 |              | VAL           | 0.774                      | 0.933                     |
 |              | FAR           | 0.283                      | 0.073                     |
 |              | AUC           | 0.830                      | 0.983                     |
-ㅗ
 
-These results suggest the model is highly effective for Korean facial recognition scenarios.
+### 📝 Notes on Categories
 
+- **Subgroup**: Evaluation metrics computed on **specific subsets of images**, such as those containing variations in **accessories** (e.g., sunglasses, glasses), **clothing**, or **viewpoint angle**.  
+- **Total**: Evaluation metrics computed on the **entire dataset**, representing the model's overall recognition performance.
+
+---
+
+## 🔁 Evaluation with New Data
+...
