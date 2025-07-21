@@ -12,14 +12,6 @@ The original FaceNet model was trained primarily on Western face datasets. As a 
 - Updated training scripts to support additional preprocessing options (e.g., alignment method tuned for East Asian landmarks).
 - Evaluated fine-tuned model performance on Korean datasets.
 
-## 📂 Repository Structure
-│
-├── src/ # Core FaceNet code (same as original)
-├── fine_tuned_model/ # Checkpoints of the fine-tuned model
-├── scripts/ # Training and evaluation scripts
-├── README.md # You are here
-└── requirements.txt # Python dependencies
-
 ## 🔁 Evaluation with New Data
 
 ### 🧩 1. Align Your Dataset Using MTCNN
