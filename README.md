@@ -12,8 +12,6 @@ The original FaceNet model was trained primarily on Western face datasets. As a 
 - Updated training scripts to support additional preprocessing options (e.g., alignment method tuned for East Asian landmarks).
 - Evaluated fine-tuned model performance on Korean datasets.
 
----
-
 ## 🏆 Results
 
 > 📈 **Fine-tuning with Korean facial data significantly improved model performance**, especially for faces with occlusions (e.g., glasses, sunglasses) or varied viewpoints.
@@ -42,7 +40,78 @@ The original FaceNet model was trained primarily on Western face datasets. As a 
 - **Subgroup**: Evaluation metrics computed on **specific subsets of images**, such as those containing variations in **accessories** (e.g., sunglasses, glasses), **clothing**, or **viewpoint angle**.  
 - **Total**: Evaluation metrics computed on the **entire dataset**, representing the model's overall recognition performance.
 
----
-
 ## 🔁 Evaluation with New Data
-...
+
+Once you have aligned and prepared your own dataset, you can evaluate the fine-tuned model as follows.
+
+### 🧩 1. Align Your Dataset Using MTCNN
+
+This step crops the faces from new images using MTCNN:
+
+```bash
+#!/bin/bash
+
+export PYTHONPATH=/home/schae/lsmm_proj/facenet-master/src
+
+for N in {1..4}; do
+    python /user/facenet-master/src/align/align_dataset_mtcnn.py \
+        /user/facenet-master/datasets/lfw/K-face_mtcnn/ \
+        /user/facenet-master/datasets/K-face_160 \
+        --image_size 160 \
+        --margin 32 \
+        --random_order \
+        --gpu_memory_fraction 0.25 &
+```
+
+> 🔧 **Please update the directory paths (`/user/...`) according to your environment.**
+
+
+### ✅ 2. Evaluate the Fine-tuned Model
+
+Run the following command to evaluate model performance on your aligned dataset:
+
+```bash
+#!/bin/bash
+
+python3 src/validate_on_newfaces.py \
+    /home/user \
+    /home/facenet-master/finetuned_models/20200517-21222 \
+    --distance_metric 1 \
+    --use_flipped_images \
+    --subtract_mean \
+    --use_fixed_image_standardization \
+    --lfw_pairs /home/jspark/Downloads/pairs_user.txt \
+    --lfw_batch_size 78 \
+    --lfw_nrof_folds 2
+```
+
+This script compares image pairs and computes accuracy, validation rate, FAR, and AUC on your dataset.
+
+### 📥 3. Load and Visualize Results
+To print or save the evaluation results:
+
+```
+#!/bin/bash
+
+python3 load_result.py
+📌 Make sure the results from validate_on_newfaces.py are saved in a readable format before loading.
+
+📂 Repository Structure
+facenet-korean/
+│
+├── src/                 # Core FaceNet code (same as original)
+├── fine_tuned_model/   # Checkpoints of the fine-tuned model
+├── korean_dataset/     # Korean face images (not included – see below)
+├── scripts/            # Training and evaluation scripts
+├── README.md           # You are here
+└── requirements.txt    # Python dependencies
+```
+
+📌 Notes
+The Korean face dataset used for fine-tuning is not included due to privacy and licensing constraints.
+
+You may use public datasets such as K-FACE or your own dataset to re-train or test the model.
+
+👤 Author
+Maintained and fine-tuned by Soyoung Chae.
+Feel free to open issues or pull requests for suggestions and improvements.
