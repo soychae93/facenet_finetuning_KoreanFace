@@ -13,14 +13,12 @@ The original FaceNet model was trained primarily on Western face datasets. As a 
 - Evaluated fine-tuned model performance on Korean datasets.
 
 ## 📂 Repository Structure
-facenet-korean/
 │
 ├── src/ # Core FaceNet code (same as original)
 ├── fine_tuned_model/ # Checkpoints of the fine-tuned model
-├── korean_dataset/ # Korean face images (not included – see below)
 ├── scripts/ # Training and evaluation scripts
 ├── README.md # You are here
-└── requirements.txt
+└── requirements.txt # Python dependencies
 
 ## 🔁 Evaluation with New Data
 
@@ -73,7 +71,7 @@ verification tasks:
 The improvement in both subgroup and total metrics after fine-tuning indicates that the model not only performs well in general, but also maintains high accuracy across challenging face conditions (e.g., occlusion or appearance changes).
 
 
-| **Category** | **Metric**    | **Model 1** (Pre-trained) | **Model 2** (Fine-tuned) |
+| **Category** | **Metric**    | **Pre-trained**            | **Fine-tuned**            |
 |--------------|---------------|----------------------------|---------------------------|
 | **Subgroup** | Threshold     | 0.37                       | 0.4                       |
 |              | Accuracy      | 0.783                      | 0.956                     |
